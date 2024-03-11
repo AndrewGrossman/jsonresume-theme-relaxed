@@ -160,7 +160,7 @@ html {lang: $lang, dir: $dir} ->
                   $ education.score
               if education.courses?.length > 0
                 div {class: \courses} ->
-                  b "#{$i18n.'Notable Courses'}:"
+                  # b "#{$i18n.'Notable Courses'}:"
                   ul ->
                     for let course in education.courses
                       li course
