@@ -23,6 +23,9 @@ $highlights = (highlights) ->
         li highlight
 
 $dates = ({start-date, end-date}, format = {}) ->
+  if not start-date and end-date
+    return @lib.format end-date, $lang, format
+    
   start-fmt = @lib.format start-date, $lang, format
   time {datetime: start-date} start-fmt
   if end-date
