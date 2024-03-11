@@ -137,10 +137,7 @@ html {lang: $lang, dir: $dir} ->
             section {class: 'education details'} ->
               div ->
                 strong ->
-                  if education.url
-                    a {href: education.url} education.area
-                  else
-                    span education.area
+                  span education.area
                 if education and education.endDate and not education.startDate
                     span {class: \float} ->
                       time {datetime: education.end-date} do
@@ -151,7 +148,11 @@ html {lang: $lang, dir: $dir} ->
                   span {class: \float} ->
                     $dates education{start-date, end-date}
               div ->
-                strong education.institution
+                strong ->
+                  if education.url
+                    a {href: education.url} education.institution
+                  else
+                    span education.institution
                 b {class: \float} education.study-type
               if education.score
                 div {class: \grade} ->
