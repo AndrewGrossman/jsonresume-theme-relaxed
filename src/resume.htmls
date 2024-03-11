@@ -25,7 +25,7 @@ $highlights = (highlights) ->
 $dates = ({start-date, end-date}, format = {}) ->
   if not start-date and end-date
     return @lib.format end-date, $lang, format
-    
+
   start-fmt = @lib.format start-date, $lang, format
   time {datetime: start-date} start-fmt
   if end-date
@@ -141,7 +141,13 @@ html {lang: $lang, dir: $dir} ->
                     a {href: education.url} education.area
                   else
                     span education.area
-                if @lib.any-of education, <[startDate endDate]>
+                if education and education.endDate and not education.startDate
+                    span {class: \float} ->
+                      time {datetime: education.end-date} do
+                        formattedDate = @lib.format "January 1, #{education.endDate}", $lang, year: 'numeric'
+                        yearOnly = formattedDate.split(" ")[1]  # Extract the year part from the formatted date
+                        span yearOnly
+                else if @lib.any-of education, <[startDate endDate]>
                   span {class: \float} ->
                     $dates education{start-date, end-date}
               div ->
