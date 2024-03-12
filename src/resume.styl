@@ -49,7 +49,7 @@ main
   margin 0 $body-margin
 
 header
-  height 8em
+  height 5em
   margin $body-margin $body-margin * 1.5 (- $body-margin)
 
 article:not(.flex) > h3
@@ -66,7 +66,7 @@ h2
   margin 0.5em 0
 
 h3
-  font-size 1.25em
+  font-size 1.4em
   font-weight 600
 
   &::before
@@ -160,6 +160,13 @@ time + :is(time, span)::before
   &:not(:last-of-type)
     padding-block-end 1em
     border-block-end 0.15ex dashed darkslategray
+
+.details.next-workplace-repeats-true 
+    border-block-end .15ex dotted #4f6f6f
+
+.work.details strong.workplace,
+.work.details strong.workplace a
+  font-size: 1.1em
 
 .wrap
   line-height 1.5em
@@ -278,3 +285,6 @@ time + :is(time, span)::before
   html[dir="rtl"]
     #image > img, .float
       float left
+
+article:last-child
+  padding-bottom: 20px 

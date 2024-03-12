@@ -23,6 +23,12 @@ $highlights = (highlights) ->
         li highlight
 
 $dates = ({start-date, end-date}, format = {}) ->
+  # If we have just years for the start and end dates, return just the years. i.e. 2019 - 2021
+  # We can do this by checking if the length of the start and end strings are 4
+
+  if start-date and end-date and start-date.length == 4 and end-date.length == 4
+    return span "#{start-date} - #{end-date}"
+  
   if not start-date and end-date
     return @lib.format end-date, $lang, format
 
@@ -34,6 +40,24 @@ $dates = ({start-date, end-date}, format = {}) ->
       time {datetime: end-date} end-fmt
   else
     span $i18n.\Present
+
+$displayWorkDetails = (work, repeatedWorkplace, nextWorkplaceRepeats) ->
+  classes = "work details next-workplace-repeats-#{nextWorkplaceRepeats}"
+  section {class: classes} ->
+    div ->
+      if !repeatedWorkplace
+        strong {class: 'workplace'} ->
+            if work.url
+              a {href: work.url} work.name
+            else
+              span work.name
+    div ->
+      strong work.position
+      if @lib.any-of work, <[startDate endDate]>
+        span {class: \float} ->
+          $dates work{start-date, end-date}
+    p {class: \wrap} work.summary if work.summary
+    $highlights work.highlights
 
 const $size = @resume.meta?.\x-size || \10pt
 
@@ -111,25 +135,21 @@ html {lang: $lang, dir: $dir} ->
                     a {rel: \me href: profile.url} profile.username
                   else
                     span profile.username
+
       if @resume.work?.length > 0
         article {id: \work} ->
           $title 'Work Experience' \building-office-2
-          for let work in @resume.work
+          for let work, index in @resume.work
             # TODO: support location & description
-            section {class: 'work details'} ->
-              div ->
-                strong ->
-                  if work.website
-                    a {href: work.website} work.company
-                  else
-                    span work.company
-                if @lib.any-of work, <[startDate endDate]>
-                  span {class: \float} ->
-                    $dates work{start-date, end-date}
-              div ->
-                strong work.position
-              p {class: \wrap} work.summary if work.summary
-              $highlights work.highlights
+            repeatedWorkplace = false
+            if index > 0
+              if work.name == @resume.work[index - 1].name
+                repeatedWorkplace = true
+
+            nextWorkplaceRepeats = index < @resume.work.length - 1 and work.name == @resume.work[index + 1].name
+
+            $displayWorkDetails work, repeatedWorkplace, nextWorkplaceRepeats
+
       if @resume.education?.length > 0
         article {id: \education} ->
           $title \Education \academic-cap
