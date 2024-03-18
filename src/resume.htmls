@@ -157,7 +157,7 @@ html {lang: $lang, dir: $dir} ->
             section {class: 'education details'} ->
               div ->
                 strong ->
-                  span education.area
+                  span {class: 'education-area'} education.area
                 if education and education.endDate and not education.startDate
                     span {class: \float} ->
                       time {datetime: education.end-date} do
@@ -262,8 +262,22 @@ html {lang: $lang, dir: $dir} ->
             section {class: \skill} ->
               strong skill.name
               div {title: skill.level} ->
-                progress {max: 100 value: @lib.skill skill.level}
-              $keywords skill.keywords
+                progress {max: 100, value: @lib.skill skill.level}
+
+              $keywords skill.keywords.map (keyword) ->
+                if keyword == "GitHub 🥚"
+                  githubProfile = null
+                  for profile in @resume.basics.profiles
+                    if profile.network == "github"
+                      githubProfile = profile
+                      break
+                  if githubProfile?
+                    a {href: "#{githubProfile.url}/resume"} -> mark keyword
+                  else
+                    mark keyword
+                else
+                  mark keyword
+
       if @resume.languages?.length > 0
         article {id: \languages class: \flex} ->
           $title \Languages \language
