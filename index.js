@@ -61,7 +61,7 @@ const lib = {
       case 'ico':
         return 'image/vnd.microsoft.icon';
       default:
-        return 'image/png';
+        return 'image/svg+xml';
     }
   },
   /**
