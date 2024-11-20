@@ -43,6 +43,11 @@ const lib = {
    * @returns {string}
    */
   mime: (url) => {
+    if (url.toLowerCase().split("/").at(-1) === "github")
+      return 'image/svg+xml';
+    if (url.toLowerCase().split("/").at(-1) === "linkedin")
+      return 'image/svg+xml';
+
     switch (url.toLowerCase().split('.').at(-1)) {
       case 'png':
         return 'image/png';
@@ -56,7 +61,7 @@ const lib = {
       case 'ico':
         return 'image/vnd.microsoft.icon';
       default:
-        return 'image/svg+xml';
+        return 'image/png';
     }
   },
   /**
