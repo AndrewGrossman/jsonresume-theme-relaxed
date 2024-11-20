@@ -28,7 +28,7 @@ $dates = ({start-date, end-date}, format = {}) ->
 
   if start-date and end-date and start-date.length == 4 and end-date.length == 4
     return span "#{start-date} - #{end-date}"
-  
+
   if not start-date and end-date
     return @lib.format end-date, $lang, format
 
@@ -149,6 +149,25 @@ html {lang: $lang, dir: $dir} ->
             nextWorkplaceRepeats = index < @resume.work.length - 1 and work.name == @resume.work[index + 1].name
 
             $displayWorkDetails work, repeatedWorkplace, nextWorkplaceRepeats
+
+# Commented out from upstream
+#          for let work in @resume.work
+#            # TODO: support description
+#            section {class: 'work details'} ->
+#              div ->
+#                strong work.position
+#                if @lib.any-of work, <[startDate endDate]>
+#                  span {class: \float} ->
+#                    $dates work{start-date, end-date}
+#              div ->
+#                strong ->
+#                  if work.url
+#                    a {href: work.url} work.name
+#                  else
+#                    span work.name
+#                b {class: \float} work.location if work.location
+#              p {class: \wrap} work.summary if work.summary
+#              $highlights work.highlights
 
       if @resume.education?.length > 0
         article {id: \education} ->
