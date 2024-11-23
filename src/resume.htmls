@@ -114,9 +114,7 @@ html {lang: $lang, dir: $dir} ->
           img alt: $i18n.\Photo, src: @resume.basics.image
     main ->
       article {id: \about} ->
-        $title 'Personal Info' \identification
-        if @resume.basics.summary
-          p {id: \summary class: \wrap} @resume.basics.summary
+        #$title 'Personal Info' \identification
         address {class: \flex} ->
           section {id: \contact} ->
             $url @resume.basics.url, '', \Website, \globe-alt
@@ -135,6 +133,9 @@ html {lang: $lang, dir: $dir} ->
                     a {rel: \me href: profile.url} profile.username
                   else
                     span profile.username
+
+        if @resume.basics.summary
+          p {id: \summary class: \wrap} @resume.basics.summary
 
       if @resume.work?.length > 0
         article {id: \work} ->
