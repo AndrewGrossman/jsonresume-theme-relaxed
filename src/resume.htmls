@@ -174,36 +174,14 @@ html {lang: $lang, dir: $dir} ->
         article {id: \education} ->
           $title \Education \academic-cap
           for let education in @resume.education
-            section {class: 'education details'} ->
-              div ->
-                strong ->
-                  span {class: 'education-area'} education.area
-                if education and education.endDate and not education.startDate
-                    span {class: \float} ->
-                      time {datetime: education.end-date} do
-                        formattedDate = @lib.format "January 1, #{education.endDate}", $lang, year: 'numeric'
-                        yearOnly = formattedDate.split(" ")[1]  # Extract the year part from the formatted date
-                        span yearOnly
-                else if @lib.any-of education, <[startDate endDate]>
-                  span {class: \float} ->
-                    $dates education{start-date, end-date}
-              div ->
-                strong ->
-                  if education.url
-                    a {href: education.url} education.institution
-                  else
-                    span education.institution
-                b {class: \float} education.study-type
-              if education.score
-                div {class: \grade} ->
-                  b "#{$i18n.\Grade}: "
-                  $ education.score
-              if education.courses?.length > 0
-                div {class: \courses} ->
-                  # b "#{$i18n.'Notable Courses'}:"
-                  ul ->
-                    for let course in education.courses
-                      li course
+            div {class: 'education-entry'} ->
+              if education.url
+                a {href: education.url} education.institution
+              else
+                span education.institution
+              $ " \u2014 #{education.area}"
+              if education.endDate
+                $ ", #{education.endDate.substring(0, 4)}"
       if @resume.volunteer?.length > 0
         article {id: \volunteer} ->
           $title 'Volunteer Work' \lifebuoy
