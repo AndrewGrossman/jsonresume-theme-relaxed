@@ -36,16 +36,16 @@ const lib = {
    * @param {string} name the icon name
    * @returns {string}
    */
-  brand: (name) => `https://cdn.simpleicons.org/${name.toLowerCase().replace(' ', '')}`,
+  brand: (name) => `https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/${name.toLowerCase().replace(' ', '')}.svg`,
   /**
    * Guess the mime type of an image by its extension.
    * @param {string} url the URL of the image.
    * @returns {string}
    */
   mime: (url) => {
-    if (url.toLowerCase().split("/").at(-1) === "github")
+    if (url.toLowerCase().split("/").at(-1) === "github.svg")
       return 'image/svg+xml';
-    if (url.toLowerCase().split("/").at(-1) === "linkedin")
+    if (url.toLowerCase().split("/").at(-1) === "linkedin.svg")
       return 'image/svg+xml';
 
     switch (url.toLowerCase().split('.').at(-1)) {
